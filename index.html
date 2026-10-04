@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMO MOBILITY</title>
+
+    <style>
+        .carte-annonce {
+    background: white;
+    padding: 20px;
+    margin-top: 15px;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: #f4f6f8;
+        }
+
+        h1 {
+            text-align: center;
+            background: #111;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        h2 {
+            color: #111;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #111;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #annonce {
+            background: white;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 12px;
+        }
+
+        #annonce img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        #resultatRecherche {
+            background: white;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🚗 SAMO MOBILITY 🚲</h1>
+    <p style="text-align: center; font-size: 18px;">
+    Bienvenue sur SAMO MOBILITY 👋
+</p>
+
+<p style="text-align: center;">
+    Trouvez votre prochaine voiture ou votre prochain vélo électrique.
+</p>
+    <div>
+    <button onclick="choisirCategorie('Voiture')">🚗 Voitures</button>
+    <br><br>
+    <button onclick="choisirCategorie('Vélo électrique')">🚲 Vélos électriques</button>
+</div>
+
+<br>
+
+    <h2>🔎 Rechercher un véhicule</h2>
+
+    <input id="recherche" type="text"
+        placeholder="Exemple : Peugeot, BMW, vélo électrique...">
+
+    <br><br>
+
+    <button onclick="rechercher()">Rechercher</button>
+
+    <div id="resultatRecherche"></div>
+
+    <h2>➕ Déposer une annonce</h2>
+
+    <label>Type de véhicule :</label>
+
+    <select id="type">
+        <option>Voiture</option>
+        <option>Vélo électrique</option>
+    </select>
+
+    <br><br>
+
+    <label>Photo du véhicule :</label>
+    <input id="photo" type="file" accept="image/*">
+
+    <br><br>
+
+    <label>Marque :</label>
+    <input id="marque" type="text" placeholder="Exemple : Peugeot">
+
+    <br><br>
+
+    <label>Modèle :</label>
+    <input id="modele" type="text" placeholder="Exemple : 208">
+
+    <br><br>
+
+    <label>Année :</label>
+    <input id="annee" type="number" placeholder="Exemple : 2020">
+
+    <br><br>
+
+    <label>Prix (€) :</label>
+    <input id="prix" type="number" placeholder="Exemple : 9500">
+
+    <br><br>
+
+    <label>Kilométrage :</label>
+    <input id="kilometrage" type="number" placeholder="Exemple : 65000">
+
+    <br><br>
+
+    <button onclick="publierAnnonce()">Publier l'annonce</button>
+
+    <h2>📋 Annonce publiée</h2>
+    <div id="filtre"></div>
+
+    <div id="annonce"></div>
+
+    <script>
+
+        function publierAnnonce() {
+
+            let type = document.getElementById("type").value;
+            let marque = document.getElementById("marque").value;
+            let modele = document.getElementById("modele").value;
+            let annee = document.getElementById("annee").value;
+            let prix = document.getElementById("prix").value;
+            let kilometrage = document.getElementById("kilometrage").value;
+            let photo = document.getElementById("photo").files[0];
+
+            let contenu =
+                "<h3>" +
+                    "<div class='carte-annonce'>" +
+                (type === "Voiture" ? "🚗" : "🚲") +
+                " " + marque + " " + modele +
+                "</h3>" +
+                "<p>Type : " + type + "</p>" +
+                "<p>Année : " + annee + "</p>" +
+                "<p style='font-size: 24px; font-weight: bold;'>💶 " + prix + " €</p>"
+                "<p>Kilométrage : " + kilometrage + " km</p>";
+
+            if (photo) {
+                contenu +=
+                    "<br><img src='" +
+                    URL.createObjectURL(photo) +
+                    "' width='300'>";
+            }
+
+            document.getElementById("annonce").innerHTML = contenu;
+        }
+
+
+        function rechercher() {
+
+            let recherche =
+                document.getElementById("recherche").value
+                .toLowerCase();
+
+            let annonce =
+                document.getElementById("annonce").innerText
+                .toLowerCase();
+
+            if (annonce.includes(recherche) && recherche !== "") {
+
+                document.getElementById("resultatRecherche").innerHTML =
+                    "<p>✅ Annonce trouvée !</p>" +
+                    document.getElementById("annonce").innerHTML;
+
+            } else {
+
+                document.getElementById("resultatRecherche").innerHTML =
+                    "<p>❌ Aucune annonce trouvée.</p>";
+            }
+        }
+
+}
+    </script>
+    
+
+</body>
+
+</html>
